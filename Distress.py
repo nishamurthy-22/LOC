@@ -18,19 +18,19 @@ def send_sos(string):
 
     pygame.mixer.init()
 
-    audio = wave.open("test.wav",mode="rb")
-    frame_bytes = bytearray(list(audio.readframes(audio.getnframes())))
+    audio = wave.open("test.wav",mode="rb") #open the audio clip
+    frame_bytes = bytearray(list(audio.readframes(audio.getnframes()))) #acquire frame
     string = string + int((len(frame_bytes)-(len(string)*8*8))/8) *'@'
     bits = list(map(int, ''.join([bin(ord(i)).lstrip('0b').rjust(8,'0') for i in string])))
     for i, bit in enumerate(bits):
-        frame_bytes[i] = (frame_bytes[i] & 254) | bit
+        frame_bytes[i] = (frame_bytes[i] & 254) | bit #encode message in the audio frame
     frame_modified = bytes(frame_bytes)
     # for i in range(0,10):
     #     print(frame_bytes[i])
     print("Audio Signal Encoded... RickRolling...")
     newAudio =  wave.open('distress.wav',mode='wb')
     newAudio.setparams(audio.getparams())
-    newAudio.writeframes(frame_modified)
+    newAudio.writeframes(frame_modified) # writing the modified frame into a new wav file
 
 
     audio.close()
