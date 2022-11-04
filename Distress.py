@@ -19,7 +19,7 @@ def send_sos(string):
     pygame.mixer.init()
 
     audio = wave.open("test.wav",mode="rb") #open the audio clip
-    frame_bytes = bytearray(list(audio.readframes(audio.getnframes()))) #acquire frame
+    frame_bytes = bytearray(list(audio.readframes(audio.getnframes()))) #acquire frames
     string = string + int((len(frame_bytes)-(len(string)*8*8))/8) *'@'
     bits = list(map(int, ''.join([bin(ord(i)).lstrip('0b').rjust(8,'0') for i in string])))
     for i, bit in enumerate(bits):
